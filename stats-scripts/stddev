@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+#
+# A script to calculate the mean and standard deviation.
+#
+# Reads in a floating-point number per line from standard in, then calculates
+# the mean and standard deviation, printing them to standard out.
+
+import sys
+
+sum = 0.
+sum_sq = 0.
+n = 0
+
+for line in sys.stdin:
+	x = float( line )
+	sum += x
+	sum_sq += x ** 2
+	n += 1
+
+mean = sum / n
+stddev = ( ( sum_sq / n ) - mean ** 2 ) ** 0.5
+print mean, stddev
