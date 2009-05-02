@@ -1,0 +1,33 @@
+#!/bin/sh
+# Automatic backup script for Git.
+#
+# Creates a backup of the remote repository when git-push is issued.
+#
+# Instructions:
+# 1. Place this file ".git/hooks" directory within your repository.
+# 2. Make sure the file is named "post-update" and has execute permissions set.
+# 3. Set USER to the user name to be used to log in to the backup server.
+# 4. Set SERVER to the address of the backup server.
+# 5. Set LOCATION to the path to store backups on the backup server.
+# 6. Create an SSH key for the git-user user on the repository server.
+# 7. Append the public key to ".ssh/authorized_keys" on USER's account on the
+#    backup server.
+# 8. Log in once from git-user@repository server to USER@backup server to
+#    accept the server RSA key.
+#
+# Everything should be peachy and backups should happen everytime there's a
+# push. One thing to note is that LZMA is used by default, it can be changed
+# below to BZIP2 or another supported format.
+
+trap 'rm -f $FILE' 0 1 2 3 6 9 14 15
+umask 077
+
+FILE=`mktemp`
+NAME=`basename $PWD`
+USER='remote-user-name'
+SERVER='remote-server-address'
+LOCATION='remote-backup-path'
+
+echo "Writing backup \"$NAME\" to $SERVER"
+cd ..
+tar --create --lzma $NAME | ssh $USER@$SERVER "cat > $LOCATION/$NAME.tar.lzma"
