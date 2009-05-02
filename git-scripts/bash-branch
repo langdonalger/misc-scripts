@@ -1,0 +1,19 @@
+# BASH script to show Git branch in prompt.
+#
+# This script will show the current Git branch in the prompt, eg:
+#    [directory branch]
+#
+# Where "directory" is the current directory, and "branch" is the current
+# branch.  Ofcourse "PS1" can be modified to whatever particular style of
+# prompt is preferred, just ensure that "$(branch)" is called if branch display
+# is desired.
+#
+# To use this, put it within "~/.bash_profile" or "~/.bashrc", or ensure that
+# it is source'd from either file.
+
+function branch
+{
+	git branch 2> /dev/null | grep '^*' | sed 's/^*//'
+}
+
+PS1='[\[\e[34m\]\W\[\e[0m\]\[\e[31m\]$(branch)\[\e[0m\]] '
