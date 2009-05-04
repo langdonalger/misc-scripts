@@ -1,4 +1,15 @@
 #!/bin/sh
+#
+# A script to generate graphs based on include statements.
+#
+# This enables easy visualisation of the dependencies between files. However it
+# can get easily overwhelming with large source trees.
+#
+# To use, just run at the base of the source tree, e.g.:
+#     sh include-graph
+#
+# Which will then generate a file named "include-graph.pdf" which can then be
+# viewed.
 
 TYPE=pdf
 FILE=include-graph.pdf
