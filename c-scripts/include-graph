@@ -1,9 +1,14 @@
 #!/bin/sh
 
+TYPE=pdf
+FILE=include-graph.pdf
+
 ( echo "digraph include
 {
 	rankdir = LR"
 	grep -Ir '#include' . |\
 	sed -e '/BOOST/d' -e 's/^.\///' -e 's/[:"<>]//g' -e 's/#include//' |\
 	awk '{ printf "\t\"%s\" -> \"%s\";\n", $1, $2 }'
-echo "}" ) | dot -Tpdf -o include-graph.pdf
+echo "}" ) | dot -T$TYPE -o $FILE
+
+echo "Wrote graph to \"$FILE\""
