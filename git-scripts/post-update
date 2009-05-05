@@ -30,4 +30,4 @@ LOCATION='remote-backup-path'
 
 echo "Writing backup \"$NAME\" to $SERVER"
 cd ..
-tar --create --lzma $NAME | ssh $USER@$SERVER "cat > $LOCATION/$NAME.tar.lzma"
+tar -c $NAME | lzma -9c | ssh $USER@$SERVER "cat > $LOCATION/$NAME.tar.lzma"
